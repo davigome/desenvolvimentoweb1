@@ -5,43 +5,43 @@ const conexao = mysql.createConnection({
     host: "localhost",
     user: "root",
     password: "root",
-    database: "escola"
+    database: "locadora"
 });
  
 // Dados que serão cadastrados
-const nome = "Karen";
-const email = "KarenAndressa@email.com";
+const titulo = "Toy Story";
+const ano = 1995;
  
 // Comando SQL
-const insert = "INSERT INTO alunos (nome, email) VALUES (?, ?)";
+const insert = "INSERT INTO filmes (titulo, ano) VALUES (?, ?)";
  
 //Envia os dados para o MySQL
-conexao.query(insert, [nome, email], function (erro) {
+conexao.query(insert, [titulo, ano], function (erro) {
  
     if(erro) {
         console.log("Erro ao cadastrar.");
         console.log(erro);
     }else {
-        console.log("Aluno cadastrado com sucesso!");
+        console.log("Filme cadastrado com sucesso!");
     }
    
 });
  
  
-// ID do aluno que será excluido
+// ID do filme que será excluido
 const id = 6;
  
-const deletar = "DELETE FROM  alunos WHERE id = ?";
+const deletar = "DELETE FROM  filmes WHERE id = ?";
  
 conexao.query(deletar, [id], function (erro, resultado) {
  
     if (erro) {
-        console.log("Erro ao excluir o aluno.");
+        console.log("Erro ao excluir o filme.");
         console.log(erro);
     } else if (resultado.affecteRows === 0) {
-        console.log("Aluno não encontrado.");
+        console.log("Filme não encontrado.");
     } else {
-        console.log("Aluno excluido com sucesso!");
+        console.log("Filme excluido com sucesso!");
     }
     conexao.end();
 });

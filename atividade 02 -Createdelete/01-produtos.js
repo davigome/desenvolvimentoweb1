@@ -9,8 +9,8 @@ const conexao = mysql.createConnection({
 });
  
 // Dados que serão cadastrados
-const nome = "Monitor";
-const preco = '70.0';
+const nome = "Teclado Gamer";
+const preco = 180.00;
  
 // Comando SQL
 const insert = "INSERT INTO produtos (nome, preco) VALUES (?, ?)";
@@ -24,13 +24,12 @@ conexao.query(insert, [nome, preco], function (erro) {
     }else {
         console.log("Produto cadastrado com sucesso!");
     }
-
-   conexao.end();
+   
 });
  
  
 // ID do produto que será excluido
-const id = 7;
+const id = 6;
  
 const deletar = "DELETE FROM  produtos WHERE id = ?";
  
@@ -39,10 +38,10 @@ conexao.query(deletar, [id], function (erro, resultado) {
     if (erro) {
         console.log("Erro ao excluir o produto.");
         console.log(erro);
-    } else if (resultado.affectedRows === 0) {
+    } else if (resultado.affecteRows === 0) {
         console.log("Produto não encontrado.");
     } else {
         console.log("Produto excluido com sucesso!");
     }
     conexao.end();
-}); 
+});
