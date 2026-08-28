@@ -31,6 +31,34 @@ function cadastrarProduto() {
     });
 }
 
+// ID do aluno que será atualizado
+function atualizarProduto() {
+ 
+    const id = readline.questionInt("Digite o ID do Produto: ");
+
+    const nome = readline.question("Digite o novo nome do Produto: ");
+    const preco = readline.question("Digite o novo preço do Produto: ");
+    const quantidade = readline.question("Digite a nova quantidade do Produto: ");
+
+ 
+    const update = `UPDATE produtos SET nome = ?, preco = ?, quantidade = ? WHERE id = ?`;
+
+    conexao.query(update, [nome, preco, quantidade, id], function (erro, resultado) {
+ 
+        if (erro) {
+        console.log("Erro ao atualizar o aluno.");
+        console.log(erro);
+        } else if (resultado.affectedRows === 0) {
+        console.log("Aluno não encontrado.");
+        } else {
+        console.log("Aluno atualizado com sucesso!");
+        }
+ 
+       menu();
+    });
+
+}
+
 // Função para excluir Produto
 function excluirProduto() {
 
@@ -86,14 +114,15 @@ function listarProduto() {
 function menu() {
 
     console.log("\n===== MENU =====");
-    console.log("1 - Cadastrar produto");
-    console.log("2 - Excluir produto");
-    console.log("3 - Listar produto");
+    console.log("1 - Cadastrar aluno");
+    console.log("2 - Excluir aluno");
+    console.log("3 - Atualizar aluno");
+    console.log("4 - Listar alunos");
     console.log("0 - Sair");
 
     const opcao = readline.questionInt("Escolha uma opcao: ");
 
-    if (opcao === 1) {
+if (opcao === 1) {
 
         cadastrarProduto();
 
@@ -102,6 +131,10 @@ function menu() {
         excluirProduto();
 
     } else if (opcao === 3) {
+
+        atualizarProduto();
+
+    } else if (opcao === 4) {
 
         listarProduto();
 

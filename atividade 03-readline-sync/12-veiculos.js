@@ -60,6 +60,32 @@ function excluirVeiculo() {
     }
 }
 
+// ID do aluno que será atualizado
+function atualizarVeiculo() {
+ 
+    const id = readline.questionInt("Digite o ID do veiculo: ");
+
+    const modelo = readline.question("Digite o novo mdoelo do veiculo: ");
+    const placa = readline.question("Digite a nova placa do veiculo: ");
+ 
+    const update = `UPDATE veiculos SET modelo = ?, placa = ? WHERE id = ?`;
+
+    conexao.query(update, [modelo, placa, id], function (erro, resultado) {
+ 
+        if (erro) {
+        console.log("Erro ao atualizar o veiculo.");
+        console.log(erro);
+        } else if (resultado.affectedRows === 0) {
+        console.log("Veiculo não encontrado.");
+        } else {
+        console.log("Veiculo atualizado com sucesso!");
+        }
+ 
+       menu();
+    });
+
+}
+
 // Função para listar 
 function listarVeiculo() {
 
@@ -98,7 +124,8 @@ function menu() {
     console.log("\n===== MENU =====");
     console.log("1 - Cadastrar veiculo");
     console.log("2 - Excluir veiculo");
-    console.log("3 - Listar veiculo");
+    console.log("3 - Atualizar veiculo");
+    console.log("4 - Listar veiculo");
     console.log("0 - Sair");
 
     const opcao = readline.questionInt("Escolha uma opcao: ");
@@ -112,6 +139,10 @@ function menu() {
         excluirVeiculo();
 
     } else if (opcao === 3) {
+
+        atualizarVeiculo ();
+
+    } else if (opcao === 4) {
 
         listarVeiculo();
 

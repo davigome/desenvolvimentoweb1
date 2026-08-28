@@ -51,6 +51,32 @@ function excluirFilme() {
     });
 }
 
+// ID do aluno que será atualizado
+function atualizarFilme() {
+ 
+    const id = readline.questionInt("Digite o ID do filme: ");
+
+    const titulo = readline.question("Digite o novo titulo do filme: ");
+    const ano = readline.question("Digite o novo ano do filme: ");
+ 
+    const update = `UPDATE filmes SET titulo = ?, ano = ? WHERE id = ?`;
+
+    conexao.query(update, [titulo, ano, id], function (erro, resultado) {
+ 
+        if (erro) {
+        console.log("Erro ao atualizar o filme.");
+        console.log(erro);
+        } else if (resultado.affectedRows === 0) {
+        console.log("Filme não encontrado.");
+        } else {
+        console.log("Filme atualizado com sucesso!");
+        }
+ 
+       menu();
+    });
+
+}
+
 // Função para listar 
 function listarFilme() {
 
@@ -86,12 +112,13 @@ function menu() {
     console.log("\n===== MENU =====");
     console.log("1 - Cadastrar Filme");
     console.log("2 - Excluir Filme");
-    console.log("3 - Listar Filme");
+    console.log("3 - Atualizar Filme");
+    console.log("4 - Listar Filme");
     console.log("0 - Sair");
 
     const opcao = readline.questionInt("Escolha uma opcao: ");
 
-    if (opcao === 1) {
+if (opcao === 1) {
 
         cadastrarFilme();
 
@@ -100,6 +127,10 @@ function menu() {
         excluirFilme();
 
     } else if (opcao === 3) {
+
+        atualizarFilme();
+
+    } else if (opcao === 4) {
 
         listarFilme();
 

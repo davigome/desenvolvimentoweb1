@@ -17,8 +17,7 @@ const id = 1;
 const update = `
     UPDATE alunos
     SET nome = ?, email = ?
-    WHERE id = ?
-`;
+    WHERE id = ?`;
 conexao.query(update, [nome, email, id], function (erro, resultado) {
  
     if (erro) {

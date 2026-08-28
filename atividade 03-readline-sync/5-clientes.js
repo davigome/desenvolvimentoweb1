@@ -51,6 +51,32 @@ function excluirCliente() {
     });
 }
 
+// ID do aluno que será atualizado
+function atualizarCliente() {
+ 
+    const id = readline.questionInt("Digite o ID: ");
+
+    const nome = readline.question("Digite o novo nome: ");
+    const telefone = readline.question("Digite o novo telefone: ");
+ 
+    const update = `UPDATE clientes SET nome = ?, telefone = ? WHERE id = ?`;
+
+    conexao.query(update, [nome, telefone, id], function (erro, resultado) {
+ 
+        if (erro) {
+        console.log("Erro ao atualizar.");
+        console.log(erro);
+        } else if (resultado.affectedRows === 0) {
+        console.log("Não encontrado.");
+        } else {
+        console.log("Atualizado com sucesso!");
+        }
+ 
+       menu();
+    });
+
+}
+
 // Função para listar Cliente
 function listarCliente() {
 
@@ -85,14 +111,15 @@ function listarCliente() {
 function menu() {
 
     console.log("\n===== MENU =====");
-    console.log("1 - Cadastrar cliente");
-    console.log("2 - Excluir cliente");
-    console.log("3 - Listar cliente");
+    console.log("1 - Cadastrar");
+    console.log("2 - Excluir");
+    console.log("3 - Atualizar");
+    console.log("4 - Listar");
     console.log("0 - Sair");
 
     const opcao = readline.questionInt("Escolha uma opcao: ");
 
-    if (opcao === 1) {
+if (opcao === 1) {
 
         cadastrarCliente();
 
@@ -101,6 +128,10 @@ function menu() {
         excluirCliente();
 
     } else if (opcao === 3) {
+
+        atualizarCliente();
+
+    } else if (opcao === 4) {
 
         listarCliente();
 

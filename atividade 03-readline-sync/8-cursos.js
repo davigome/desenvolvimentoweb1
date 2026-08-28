@@ -9,13 +9,13 @@ const conexao = mysql.createConnection({
     database: "sistema_cursos"
 });
 
-// Função para cadastrar produto
+// Função para cadastrar
 function cadastrarCurso() {
 
     const nome = readline.question("Digite o nome do curso: ");
     const carga_horaria = readline.question("Digite carga horaria do curso: ");
 
-    const insert = "INSERT INTO produtos (nome, carga_horaria) VALUES (?, ?)";
+    const insert = "INSERT INTO cursos (nome, carga_horaria) VALUES (?, ?)";
 
     conexao.query(insert, [nome, carga_horaria], function (erro) {
 
@@ -49,6 +49,32 @@ function excluirCurso() {
 
         menu();
     });
+}
+
+// ID do aluno que será atualizado
+function atualizarCurso() {
+ 
+    const id = readline.questionInt("Digite o ID do curso: ");
+
+    const nome = readline.question("Digite o novo nome do curso: ");
+    const carga_horaria = readline.question("Digite a carga horaria do curso: ");
+ 
+    const update = `UPDATE cursos SET nome = ?, carga_horaria = ? WHERE id = ?`;
+
+    conexao.query(update, [nome, carga_horaria, id], function (erro, resultado) {
+ 
+        if (erro) {
+        console.log("Erro ao atualizar o curso.");
+        console.log(erro);
+        } else if (resultado.affectedRows === 0) {
+        console.log("Curso não encontrado.");
+        } else {
+        console.log("Curso atualizado com sucesso!");
+        }
+ 
+       menu();
+    });
+
 }
 
 // Função para listar 
@@ -86,7 +112,8 @@ function menu() {
     console.log("\n===== MENU =====");
     console.log("1 - Cadastrar curso");
     console.log("2 - Excluir curso");
-    console.log("3 - Listar curso");
+    console.log("3 - Atualizar curso");
+    console.log("4 - Listar curso");
     console.log("0 - Sair");
 
     const opcao = readline.questionInt("Escolha uma opcao: ");
@@ -99,7 +126,11 @@ function menu() {
 
         excluirCurso();
 
-    } else if (opcao === 3) {
+    } else if (opcao === 3){
+
+        atualizarCurso();
+
+    } else if (opcao === 4) {
 
         listarCurso();
 

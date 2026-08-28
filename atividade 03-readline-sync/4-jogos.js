@@ -9,7 +9,7 @@ const conexao = mysql.createConnection({
     database: "sistema_jogos"
 });
 
-// Função para cadastrar produto
+// Função para cadastrar 
 function cadastrarJogo() {
 
     const nome = readline.question("Digite o nome do jogo: ");
@@ -30,7 +30,7 @@ function cadastrarJogo() {
     });
 }
 
-// Função para excluir Produto
+// Função para excluir 
 function excluirJogo() {
 
     const id = readline.questionInt("Digite o ID do jogo: ");
@@ -51,6 +51,32 @@ function excluirJogo() {
     });
 }
 
+// ID do que será atualizado
+function atualizarJogo() {
+ 
+    const id = readline.questionInt("Digite o ID: ");
+
+    const nome = readline.question("Digite o novo nome: ");
+    const genero = readline.question("Digite o novo genero: ");
+ 
+    const update = `UPDATE jogos SET nome = ?, genero = ? WHERE id = ?`;
+
+    conexao.query(update, [nome, genero, id], function (erro, resultado) {
+ 
+        if (erro) {
+        console.log("Erro ao atualizar.");
+        console.log(erro);
+        } else if (resultado.affectedRows === 0) {
+        console.log("Não encontrado.");
+        } else {
+        console.log("Atualizado com sucesso!");
+        }
+ 
+       menu();
+    });
+
+}
+
 // Função para listar Produtos
 function listarJogo() {
 
@@ -59,7 +85,7 @@ function listarJogo() {
     conexao.query(sql, function (erro, jogos) {
 
         if (erro) {
-            console.log("Erro ao buscar jogos.");
+            console.log("Erro ao buscar jogo.");
             console.log(erro);
         } else {
 
@@ -84,14 +110,15 @@ function listarJogo() {
 function menu() {
 
     console.log("\n===== MENU =====");
-    console.log("1 - Cadastrar Jogo");
-    console.log("2 - Excluir Jogo");
-    console.log("3 - Listar Jogo");
+    console.log("1 - Cadastrar ");
+    console.log("2 - Excluir ");
+    console.log("3 - Atualizar ");
+    console.log("4 - Listar ");
     console.log("0 - Sair");
 
     const opcao = readline.questionInt("Escolha uma opcao: ");
 
-    if (opcao === 1) {
+if (opcao === 1) {
 
         cadastrarJogo();
 
@@ -100,6 +127,10 @@ function menu() {
         excluirJogo();
 
     } else if (opcao === 3) {
+
+        atualizarJogo();
+
+    } else if (opcao === 4) {
 
         listarJogo();
 

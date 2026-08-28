@@ -60,6 +60,32 @@ function excluirFuncionario() {
     }
 }
 
+// ID do aluno que será atualizado
+function atualizarFuncionario() {
+ 
+    const id = readline.questionInt("Digite o ID do funcionario: ");
+
+    const nome = readline.question("Digite o novo nome do funcionario: ");
+    const cargo = readline.question("Digite o novo cargo do funcionario: ");
+ 
+    const update = `UPDATE funcionarios SET nome = ?, cargo = ? WHERE id = ?`;
+
+    conexao.query(update, [nome, cargo, id], function (erro, resultado) {
+ 
+        if (erro) {
+        console.log("Erro ao atualizar o funcionario.");
+        console.log(erro);
+        } else if (resultado.affectedRows === 0) {
+        console.log("Funcionario não encontrado.");
+        } else {
+        console.log("Funcionario atualizado com sucesso!");
+        }
+ 
+       menu();
+    });
+
+}
+
 // Função para listar 
 function listarFuncionario() {
 
@@ -93,14 +119,15 @@ function listarFuncionario() {
 function menu() {
 
     console.log("\n===== MENU =====");
-    console.log("1 - Cadastrar Funcionario");
-    console.log("2 - Excluir Funcionario");
-    console.log("3 - Listar Funcionario");
+    console.log("1 - Cadastrar funcionario");
+    console.log("2 - Excluir funcionario");
+    console.log("3 - Atualizar funcionario");
+    console.log("4 - Listar funcionario");
     console.log("0 - Sair");
 
     const opcao = readline.questionInt("Escolha uma opcao: ");
 
-    if (opcao === 1) {
+if (opcao === 1) {
 
         cadastrarFuncionario();
 
@@ -109,6 +136,10 @@ function menu() {
         excluirFuncionario();
 
     } else if (opcao === 3) {
+
+        atualizarFuncionario();
+
+    } else if (opcao === 4) {
 
         listarFuncionario();
 

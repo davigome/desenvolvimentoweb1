@@ -30,6 +30,32 @@ function cadastrarAluno() {
     });
 };
 
+// ID do aluno que será atualizado
+function atualizarAluno() {
+ 
+    const id = readline.questionInt("Digite o ID do aluno: ");
+
+    const nome = readline.question("Digite o novo nome do aluno: ");
+    const email = readline.question("Digite o novo email do aluno: ");
+ 
+    const update = `UPDATE alunos SET nome = ?, email = ? WHERE id = ?`;
+
+    conexao.query(update, [nome, email, id], function (erro, resultado) {
+ 
+        if (erro) {
+        console.log("Erro ao atualizar o aluno.");
+        console.log(erro);
+        } else if (resultado.affectedRows === 0) {
+        console.log("Aluno não encontrado.");
+        } else {
+        console.log("Aluno atualizado com sucesso!");
+        }
+ 
+       menu();
+    });
+
+}
+
 // Função para excluir aluno
 function excluirAluno() {
 
@@ -85,7 +111,8 @@ function menu() {
     console.log("\n===== MENU =====");
     console.log("1 - Cadastrar aluno");
     console.log("2 - Excluir aluno");
-    console.log("3 - Listar alunos");
+    console.log("3 - Atualizar aluno");
+    console.log("4 - Listar alunos");
     console.log("0 - Sair");
 
     const opcao = readline.questionInt("Escolha uma opcao: ");
@@ -99,6 +126,10 @@ function menu() {
         excluirAluno();
 
     } else if (opcao === 3) {
+
+        atualizarAluno();
+
+    } else if (opcao === 4) {
 
         listarAlunos();
 
