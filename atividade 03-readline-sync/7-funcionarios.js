@@ -52,7 +52,7 @@ function excluirFuncionario() {
                 }
 
                 menu();
-        });   
+        }) ;   
            
     } else {    
         console.log("Exclusão cancelada.")
